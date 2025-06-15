@@ -178,3 +178,26 @@ SkillGroups:
             | extend City = tostring(parse_json(LocationDetails).city)       
             | summarize SigninEventCount = count() by UserPrincipalName, Location, ResultType, ResultSignature, ResultDescription, City, ClientAppUsed, AppDisplayName
             | order by SigninEventCount desc 
+
+      - Name: GetInactiveUsers
+        DisplayName: Get a list of inactive users based on signin information 
+        Description: Get a list of inactive users based on signin information 
+        DescriptionForModel : Get a list of inactive users based on having no signins for the pastDays period.
+        ExaamplePrompt:
+          - "/GetInactiveUsers for the last 10 days"
+          - "/GetInactiveUsers based on the last 90 days"              
+        Inputs:
+          - Name: pastDays
+            Description: The number of days to check for any signins for users
+            Required: true
+        Settings:
+          Target: Defender
+          Template: |-
+            let RecentSignIns = SigninLogs  
+                | where TimeGenerated > ago('{{pastDays}}'d)  
+                | distinct UserPrincipalName;  
+            SigninLogs  
+            | summarize ['Last Sign-In'] = arg_max(TimeGenerated, *) by UserPrincipalName
+            | where UserPrincipalName !in (RecentSignIns)  
+            | project Employee = UserPrincipalName, ['Last Sign-In']  
+            | order by ['Last Sign-In'] desc
