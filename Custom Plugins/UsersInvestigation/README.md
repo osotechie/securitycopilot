@@ -54,11 +54,11 @@ To install this custom plugin within your Security Copilot instance follow the b
 <br>
 
 > [!NOTE]
-> You can keep your custom plugin files in a source control platform /like GitHub, and link the Custom Plugin within Security Copilot directly to the file in source control. This means any future changes to the custom plugin files will be reflected automatically in Security Copilot.
+> You can keep your custom plugin files in a source control platform like GitHub, and link the Custom Plugin within Security Copilot directly to the file in source control. This means any future changes to the custom plugin files will be reflected automatically in Security Copilot.
 >
->During step 7, instead of uploading the file, simple **enable** the **upload as a link** option.
+>During step 7, instead of uploading the file, simple **toggle** the **upload as a link** option.
 >
->The enter a publically accessible link to the **UserInvestigations.yaml** file from your source control repo.
+>Then enter a publically accessible link to the **UserInvestigations.yaml** file from your source control repo, and set the file type to .yaml
 >
 > ***example:*** *https://raw.githubusercontent.com/osotechie/securitycopilot/refs/heads/main/Custom%20Plugins/UsersInvestigation/UsersInvestigation.yaml*
 
