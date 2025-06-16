@@ -35,7 +35,7 @@ The following are some explains of how you can invoke the diffent skills within 
 
 To install this custom plugin within your Security Copilot instance follow the below instructions:
 
-1. **Download** the [UserInvestigations.yaml](usersinvestigation.yaml)
+1. **Download** the [UserInvestigations.yaml](https://raw.githubusercontent.com/osotechie/securitycopilot/refs/heads/main/Custom%20Plugins/UsersInvestigation/UsersInvestigation.yaml)
 
 2. **Browse** to [Security Copilot](securitycopilot.microsoft.com) standalone experience portal
 
@@ -59,6 +59,8 @@ To install this custom plugin within your Security Copilot instance follow the b
 >During step 7, instead of uploading the file, simple **enable** the **upload as a link** option.
 >
 >The enter a publically accessible link to the **UserInvestigations.yaml** file from your source control repo.
+>
+> ***example:*** *https://raw.githubusercontent.com/osotechie/securitycopilot/refs/heads/main/Custom%20Plugins/UsersInvestigation/UsersInvestigation.yaml*
 
 <br>
 
