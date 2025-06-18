@@ -1,0 +1,866 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        
+        "workflows_SecurityCopilot_Scheduler_Subscription_ID": {
+            "defaultValue": "<Enter your Subscription ID>",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Resource_Group": {
+            "defaultValue": "<Enter your Resource Group>",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Location": {
+            "defaultValue": "<Enter your Location>",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Subscription_ID": {
+            "defaultValue": "<Enter your Subscription ID>",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Workday_Stop_name": {
+            "defaultValue": "SecurityCopilot-Scheduler-Workday-Stop",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Baseline_Stop_name": {
+            "defaultValue": "SecurityCopilot-Scheduler-Baseline-Stop",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Workday_Start_name": {
+            "defaultValue": "SecurityCopilot-Scheduler-Workday-Start",
+            "type": "String"
+        },
+        "workflows_SecurityCopilot_Scheduler_Baseline_Start_name": {
+            "defaultValue": "SecurityCopilot-Scheduler-Baseline-Start",
+            "type": "String"
+        },
+        "__encodeURIComponent__capacities___parameters__CapacityName_____externalid": {
+            "defaultValue": "/subscriptions/@{encodeURIComponent(parameters('SubscriptionID'))}/resourceGroups/@{encodeURIComponent(parameters('ResourceGroup'))}/providers/@{encodeURIComponent('Microsoft.SecurityCopilot')}/@{encodeURIComponent('capacities/',parameters('CapacityName'))}",
+            "type": "String"
+        },
+        "connections_Arm_SecurityCopilot_set_X_SCUs_externalid": {
+            "defaultValue": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/resourceGroups/rg-aue-sec-securitycopilot-dev-01/providers/Microsoft.Web/connections/Arm-SecurityCopilot-set-X-SCUs",
+            "type": "String"
+        },
+        "connections_worldwideholidaysip_externalid": {
+            "defaultValue": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/resourceGroups/rg-aue-sec-securitycopilot-dev-01/providers/Microsoft.Web/connections/worldwideholidaysip",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_SecurityCopilot_Scheduler_Baseline_Start_name')]",
+            "location": "australiaeast",
+            "tags": {
+                "hidden-SentinelTemplateName": "cfs-set-X-SCUs",
+                "hidden-SentinelTemplateVersion": "1.0"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "SubscriptionID": {
+                            "defaultValue": "a4fd4d88-7fee-4f1b-ab3d-46024991eeb8",
+                            "type": "String"
+                        },
+                        "ResourceGroup": {
+                            "defaultValue": "rg-aue-sec-securitycopilot-dev-01",
+                            "type": "String"
+                        },
+                        "Geo": {
+                            "defaultValue": "ANZ",
+                            "type": "String"
+                        },
+                        "location": {
+                            "defaultValue": "australiaeast",
+                            "type": "String"
+                        },
+                        "CrossGeoCompute": {
+                            "defaultValue": "Allowed",
+                            "type": "String"
+                        },
+                        "NumberofSCUs": {
+                            "defaultValue": 1,
+                            "type": "Int"
+                        },
+                        "overageState": {
+                            "defaultValue": "Limited",
+                            "type": "String"
+                        },
+                        "overageAmount": {
+                            "defaultValue": 10,
+                            "type": "Int"
+                        },
+                        "CapacityName": {
+                            "defaultValue": "scu-anz-securitycopilot-dev-001",
+                            "type": "String"
+                        },
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ],
+                                    "hours": [
+                                        9
+                                    ]
+                                }
+                            },
+                            "evaluatedRecurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ],
+                                    "hours": [
+                                        9
+                                    ]
+                                }
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Create,_Update_or_Delete": {
+                            "actions": {
+                                "Create_or_Update_Capacity": {
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['arm']['connectionId']"
+                                            }
+                                        },
+                                        "method": "put",
+                                        "body": {
+                                            "location": "@parameters('location')",
+                                            "properties": {
+                                                "numberOfUnits": "@parameters('NumberofSCUs')",
+                                                "crossGeoCompute": "@{parameters('CrossGeoCompute')}",
+                                                "geo": "@{parameters('Geo')}",
+                                                "overageState": "@{parameters('overageState')}",
+                                                "overageAmount": "@parameters('overageAmount')"
+                                            }
+                                        },
+                                        "path": "[parameters('__encodeURIComponent__capacities___parameters__CapacityName_____externalid')]",
+                                        "queries": {
+                                            "x-ms-api-version": "2024-11-01-preview"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {},
+                            "else": {
+                                "actions": {
+                                    "Delete_Capacity": {
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                            "host": {
+                                                "connection": {
+                                                    "name": "@parameters('$connections')['arm']['connectionId']"
+                                                }
+                                            },
+                                            "method": "delete",
+                                            "path": "[parameters('__encodeURIComponent__capacities___parameters__CapacityName_____externalid')]",
+                                            "queries": {
+                                                "x-ms-api-version": "2024-11-01-preview"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "greater": [
+                                            "@parameters('NumberofSCUs')",
+                                            0
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "arm": {
+                                "id": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/providers/Microsoft.Web/locations/australiaeast/managedApis/Arm",
+                                "connectionId": "[parameters('connections_Arm_SecurityCopilot_set_X_SCUs_externalid')]",
+                                "connectionName": "Arm-SecurityCopilot-set-X-SCUs",
+                                "connectionProperties": {
+                                    "authentication": {
+                                        "type": "ManagedServiceIdentity"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_SecurityCopilot_Scheduler_Baseline_Stop_name')]",
+            "location": "australiaeast",
+            "tags": {
+                "hidden-SentinelTemplateName": "cfs-set-X-SCUs",
+                "hidden-SentinelTemplateVersion": "1.0"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "SubscriptionID": {
+                            "defaultValue": "a4fd4d88-7fee-4f1b-ab3d-46024991eeb8",
+                            "type": "String"
+                        },
+                        "ResourceGroup": {
+                            "defaultValue": "rg-aue-sec-securitycopilot-dev-01",
+                            "type": "String"
+                        },
+                        "Geo": {
+                            "defaultValue": "ANZ",
+                            "type": "String"
+                        },
+                        "location": {
+                            "defaultValue": "australiaeast",
+                            "type": "String"
+                        },
+                        "CrossGeoCompute": {
+                            "defaultValue": "Allowed",
+                            "type": "String"
+                        },
+                        "NumberofSCUs": {
+                            "defaultValue": 0,
+                            "type": "Int"
+                        },
+                        "overageState": {
+                            "defaultValue": "Limited",
+                            "type": "String"
+                        },
+                        "overageAmount": {
+                            "defaultValue": 10,
+                            "type": "Int"
+                        },
+                        "CapacityName": {
+                            "defaultValue": "scu-anz-securitycopilot-dev-001",
+                            "type": "String"
+                        },
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday",
+                                        "Saturday",
+                                        "Sunday"
+                                    ],
+                                    "hours": [
+                                        18,
+                                        0
+                                    ]
+                                }
+                            },
+                            "evaluatedRecurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday",
+                                        "Saturday",
+                                        "Sunday"
+                                    ],
+                                    "hours": [
+                                        18,
+                                        0
+                                    ]
+                                }
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Condition": {
+                            "actions": {
+                                "Create_or_Update_Capacity": {
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['arm']['connectionId']"
+                                            }
+                                        },
+                                        "method": "put",
+                                        "body": {
+                                            "location": "@parameters('location')",
+                                            "properties": {
+                                                "numberOfUnits": "@parameters('NumberofSCUs')",
+                                                "crossGeoCompute": "@{parameters('CrossGeoCompute')}",
+                                                "geo": "@{parameters('Geo')}",
+                                                "overageState": "@{parameters('overageState')}",
+                                                "overageAmount": "@parameters('overageAmount')"
+                                            }
+                                        },
+                                        "path": "[parameters('__encodeURIComponent__capacities___parameters__CapacityName_____externalid')]",
+                                        "queries": {
+                                            "x-ms-api-version": "2023-12-01-preview"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {},
+                            "else": {
+                                "actions": {
+                                    "Delete_Capacity": {
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                            "host": {
+                                                "connection": {
+                                                    "name": "@parameters('$connections')['arm']['connectionId']"
+                                                }
+                                            },
+                                            "method": "delete",
+                                            "path": "[parameters('__encodeURIComponent__capacities___parameters__CapacityName_____externalid')]",
+                                            "queries": {
+                                                "x-ms-api-version": "2023-12-01-preview"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "greater": [
+                                            "@parameters('NumberofSCUs')",
+                                            0
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "arm": {
+                                "id": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/providers/Microsoft.Web/locations/australiaeast/managedApis/Arm",
+                                "connectionId": "[parameters('connections_Arm_SecurityCopilot_set_X_SCUs_externalid')]",
+                                "connectionName": "Arm-SecurityCopilot-set-X-SCUs",
+                                "connectionProperties": {
+                                    "authentication": {
+                                        "type": "ManagedServiceIdentity"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_SecurityCopilot_Scheduler_Workday_Start_name')]",
+            "location": "australiaeast",
+            "tags": {
+                "hidden-SentinelTemplateName": "cfs-set-X-SCUs",
+                "hidden-SentinelTemplateVersion": "1.0"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "state": "Disabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "SubscriptionID": {
+                            "defaultValue": "a4fd4d88-7fee-4f1b-ab3d-46024991eeb8",
+                            "type": "String"
+                        },
+                        "ResourceGroup": {
+                            "defaultValue": "rg-aue-sec-securitycopilot-dev-01",
+                            "type": "String"
+                        },
+                        "Geo": {
+                            "defaultValue": "ANZ",
+                            "type": "String"
+                        },
+                        "location": {
+                            "defaultValue": "australiaeast",
+                            "type": "String"
+                        },
+                        "CrossGeoCompute": {
+                            "defaultValue": "Allowed",
+                            "type": "String"
+                        },
+                        "NumberofSCUs": {
+                            "defaultValue": 2,
+                            "type": "Int"
+                        },
+                        "overageState": {
+                            "defaultValue": "Limited",
+                            "type": "String"
+                        },
+                        "overageAmount": {
+                            "defaultValue": 15,
+                            "type": "Int"
+                        },
+                        "CapacityName": {
+                            "defaultValue": "scu-anz-securitycopilot-dev-001",
+                            "type": "String"
+                        },
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ],
+                                    "hours": [
+                                        17
+                                    ]
+                                }
+                            },
+                            "evaluatedRecurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ],
+                                    "hours": [
+                                        17
+                                    ]
+                                }
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Check_if_Public_Holiday": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['worldwideholidaysip']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/api/v3/IsTodayPublicHoliday/@{encodeURIComponent('NZ')}",
+                                "queries": {
+                                    "offset": 0
+                                }
+                            }
+                        },
+                        "_Not_a_Public_Holiday": {
+                            "actions": {
+                                "Create,_Update_or_Delete": {
+                                    "actions": {
+                                        "Create_or_update_a_resource": {
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['arm']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "put",
+                                                "body": {
+                                                    "location": "@parameters('location')",
+                                                    "properties": {
+                                                        "numberOfUnits": "@parameters('NumberofSCUs')",
+                                                        "crossGeoCompute": "@{parameters('CrossGeoCompute')}",
+                                                        "geo": "@{parameters('Geo')}",
+                                                        "overageState": "@{parameters('overageState')}",
+                                                        "overageAmount": "@parameters('overageAmount')"
+                                                    }
+                                                },
+                                                "path": "/subscriptions/@{encodeURIComponent(parameters('SubscriptionID'))}/resourcegroups/@{encodeURIComponent(parameters('ResourceGroup'))}/providers/@{encodeURIComponent('Microsoft.SecurityCopilot')}/@{encodeURIComponent('capacities',parameters('CapacityName'))}",
+                                                "queries": {
+                                                    "x-ms-api-version": "2024-11-01-preview"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "else": {
+                                        "actions": {
+                                            "Delete_a_resource": {
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['arm']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "[parameters('__encodeURIComponent__capacities___parameters__CapacityName_____externalid')]",
+                                                    "queries": {
+                                                        "x-ms-api-version": "2024-11-01-preview"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "greater": [
+                                                    "@parameters('NumberofSCUs')",
+                                                    0
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Check_if_Public_Holiday": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "else": {
+                                "actions": {}
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "equals": [
+                                            "@outputs('Check_if_Public_Holiday')?['statusCode']",
+                                            204
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "worldwideholidaysip": {
+                                "id": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/providers/Microsoft.Web/locations/australiaeast/managedApis/worldwideholidaysip",
+                                "connectionId": "[parameters('connections_worldwideholidaysip_externalid')]",
+                                "connectionName": "worldwideholidaysip"
+                            },
+                            "arm": {
+                                "id": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/providers/Microsoft.Web/locations/australiaeast/managedApis/arm",
+                                "connectionId": "[parameters('connections_Arm_SecurityCopilot_set_X_SCUs_externalid')]",
+                                "connectionName": "Arm-SecurityCopilot-set-X-SCUs",
+                                "connectionProperties": {
+                                    "authentication": {
+                                        "type": "ManagedServiceIdentity"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_SecurityCopilot_Scheduler_Workday_Stop_name')]",
+            "location": "australiaeast",
+            "tags": {
+                "hidden-SentinelTemplateName": "cfs-set-X-SCUs",
+                "hidden-SentinelTemplateVersion": "1.0"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "state": "Disabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "SubscriptionID": {
+                            "defaultValue": "a4fd4d88-7fee-4f1b-ab3d-46024991eeb8",
+                            "type": "String"
+                        },
+                        "ResourceGroup": {
+                            "defaultValue": "rg-aue-sec-securitycopilot-dev-01",
+                            "type": "String"
+                        },
+                        "Geo": {
+                            "defaultValue": "ANZ",
+                            "type": "String"
+                        },
+                        "location": {
+                            "defaultValue": "australiaeast",
+                            "type": "String"
+                        },
+                        "CrossGeoCompute": {
+                            "defaultValue": "Allowed",
+                            "type": "String"
+                        },
+                        "NumberofSCUs": {
+                            "defaultValue": 0,
+                            "type": "Int"
+                        },
+                        "overageState": {
+                            "defaultValue": "Limited",
+                            "type": "String"
+                        },
+                        "overageAmount": {
+                            "defaultValue": 15,
+                            "type": "Int"
+                        },
+                        "CapacityName": {
+                            "defaultValue": "scu-anz-securitycopilot-dev-001",
+                            "type": "String"
+                        },
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ],
+                                    "hours": [
+                                        17
+                                    ]
+                                }
+                            },
+                            "evaluatedRecurrence": {
+                                "interval": 1,
+                                "frequency": "Week",
+                                "timeZone": "New Zealand Standard Time",
+                                "schedule": {
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ],
+                                    "hours": [
+                                        17
+                                    ]
+                                }
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Check_if_Public_Holiday": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['worldwideholidaysip']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/api/v3/IsTodayPublicHoliday/@{encodeURIComponent('NZ')}",
+                                "queries": {
+                                    "offset": 0
+                                }
+                            }
+                        },
+                        "_Not_a_Public_Holiday": {
+                            "actions": {
+                                "Create,_Update_or_Delete": {
+                                    "actions": {
+                                        "Create_or_update_a_resource": {
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['arm']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "put",
+                                                "body": {
+                                                    "location": "@parameters('location')",
+                                                    "properties": {
+                                                        "numberOfUnits": "@parameters('NumberofSCUs')",
+                                                        "crossGeoCompute": "@{parameters('CrossGeoCompute')}",
+                                                        "geo": "@{parameters('Geo')}",
+                                                        "overageState": "@{parameters('overageState')}",
+                                                        "overageAmount": "@parameters('overageAmount')"
+                                                    }
+                                                },
+                                                "path": "/subscriptions/@{encodeURIComponent(parameters('SubscriptionID'))}/resourcegroups/@{encodeURIComponent(parameters('ResourceGroup'))}/providers/@{encodeURIComponent('Microsoft.SecurityCopilot')}/@{encodeURIComponent('capacities',parameters('CapacityName'))}",
+                                                "queries": {
+                                                    "x-ms-api-version": "2024-11-01-preview"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "else": {
+                                        "actions": {
+                                            "Delete_a_resource": {
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['arm']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "[parameters('__encodeURIComponent__capacities___parameters__CapacityName_____externalid')]",
+                                                    "queries": {
+                                                        "x-ms-api-version": "2024-11-01-preview"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "greater": [
+                                                    "@parameters('NumberofSCUs')",
+                                                    0
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Check_if_Public_Holiday": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "else": {
+                                "actions": {}
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "equals": [
+                                            "@outputs('Check_if_Public_Holiday')?['statusCode']",
+                                            204
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "worldwideholidaysip": {
+                                "id": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/providers/Microsoft.Web/locations/australiaeast/managedApis/worldwideholidaysip",
+                                "connectionId": "[parameters('connections_worldwideholidaysip_externalid')]",
+                                "connectionName": "worldwideholidaysip"
+                            },
+                            "arm": {
+                                "id": "/subscriptions/a4fd4d88-7fee-4f1b-ab3d-46024991eeb8/providers/Microsoft.Web/locations/australiaeast/managedApis/arm",
+                                "connectionId": "[parameters('connections_Arm_SecurityCopilot_set_X_SCUs_externalid')]",
+                                "connectionName": "Arm-SecurityCopilot-set-X-SCUs",
+                                "connectionProperties": {
+                                    "authentication": {
+                                        "type": "ManagedServiceIdentity"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -187,15 +187,18 @@ SkillGroups:
           - "/GetInactiveUsers for the last 10 days"
           - "/GetInactiveUsers based on the last 90 days"              
         Inputs:
-          - Name: pastDays
-            Description: The number of days to check for any signins for users
+          - Name: startDateTime
+            Description: The first date and time of the considered time frame. 
+            Required: true
+          - Name: endDateTime
+            Description: The end date and time of the considered time frame. 
             Required: true
         Settings:
           Target: Defender
           Template: |-
             let RecentSignIns = SigninLogs  
-                | where TimeGenerated > ago('{{pastDays}}'d)  
-                | distinct UserPrincipalName;  
+            | where TimeGenerated between (startDateTime .. endDateTime)
+            | distinct UserPrincipalName;  
             SigninLogs  
             | summarize ['Last Sign-In'] = arg_max(TimeGenerated, *) by UserPrincipalName
             | where UserPrincipalName !in (RecentSignIns)  
