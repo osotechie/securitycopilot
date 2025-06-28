@@ -2,7 +2,7 @@
 
 <img src="https://avatars.githubusercontent.com/u/34251619?v=4" align="center" width="144px" height="144px"/>
 
- ### ![alt text](../../_images/securitycopilot-icon.png) Security Copilot - Logic App - Security Copilot Scheduler
+ ### ![alt text](../../_images/securitycopilot-icon.png =32x32) Security Copilot - Logic App - Security Copilot Scheduler
 
 </div>
 
