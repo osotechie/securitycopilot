@@ -2,7 +2,7 @@
 
 <img src="https://avatars.githubusercontent.com/u/34251619?v=4" align="center" width="144px" height="144px"/>
 
-### Security Copilot - Custom Plugin (KQL) - User Investigation
+ ### ![alt text](../../_images/securitycopilot-icon.png) Security Copilot - Custom Plugin (KQL) - User Investigation
 
 </div>
 
