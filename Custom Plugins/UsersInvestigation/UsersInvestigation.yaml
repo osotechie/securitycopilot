@@ -194,15 +194,15 @@ SkillGroups:
             Description: The end date and time of the considered time frame. 
             Required: true
         Settings:
-          Target: Sentinel
+          Target: Defender
           Template: |-
             let startDateTime = datetime('{{startDateTime}}');
             let endDateTime = datetime('{{endDateTime}}');
-            let RecentSignIns = SigninLogs  
+            let RecentSignIns = SigninLogs
             | where TimeGenerated between (startDateTime .. endDateTime)
-            | distinct UserPrincipalName;  
-            SigninLogs  
+            | distinct UserPrincipalName;
+            SigninLogs
             | summarize ['Last Sign-In'] = arg_max(TimeGenerated, *) by UserPrincipalName
-            | where UserPrincipalName !in (RecentSignIns)  
-            | project Employee = UserPrincipalName, ['Last Sign-In']  
+            | where UserPrincipalName !in (RecentSignIns)
+            | project Employee = UserPrincipalName, ['Last Sign-In']
             | order by ['Last Sign-In'] desc
