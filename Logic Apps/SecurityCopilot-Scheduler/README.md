@@ -12,20 +12,19 @@
 
 These are a set of Logic Apps you can use to schedule changes to Security Copilot capacities to meet you different usage requirements, and manage your overall Security Copilot spend.
 
-![ ](../../_images/azure_logicapp_icon.png) **BASELINE LOGIC APP**
+- ![ ](../../_images/azure_logicapp_icon.png) **BASELINE LOGIC APP**
 The Baseline Logic App can be used to set (or delete) the Security Copilot capacity based on a schedule. The defaults provided with this logic app are set to run everyday at 7AM (7:00) and 6PM (18:00) and remove the Security Copilot capacity.
 
->[!Note]
-> I set the recurrance (or Schedule) for the Baseline app to run twice a day for my own environment this was to ensure my baseline SCU requirements was being enforced twice daily no matter what day of the week, or if it was a public holiday.
+    >[!Note]
+    > I set the recurrance (or Schedule) for the Baseline app to run twice a day for my own environment this was to ensure my baseline SCU requirements was being enforced twice daily no matter what day of the week, or if it was a public holiday.
 
 <br>
 
-![ ](../../_images/azure_logicapp_icon.png) **WORKDAYS LOGIC APP**
+- ![ ](../../_images/azure_logicapp_icon.png) **WORKDAYS LOGIC APP**
 The Workdays logic App can be used to set (or delete) the Security Copilot capacity also based on a schedule. But provides additional functionality to detect the day its running, for example you may want to use this app if you want to set specific Security Copilot capacity for weekdays, weekends or public holidays. The logic app has logic cases for each of these use cases. The defaults provided with this logic app are set to run everyday at 8AM (8:00) and create / update the Security Copilot capacity to 1 Provisioned SCU and allow upto 10 Overage SCU per hour on weekdays (excluding public holidays).
 
-![alt text](../../_images/Workdays-LogicApp-Designer.png)
+    ![alt text](../../_images/Workdays-LogicApp-Designer.png)
 
-<br>
 
 ### Schedule Scenarios
 
@@ -34,9 +33,9 @@ The Workdays logic App can be used to set (or delete) the Security Copilot capac
 > [!Tip]
 > If you deployed both Logic Apps using the defaults provided, it would ensure the following:
 >
-> Everyday @ 7AM it would remove the Security Copilot capacity (if it exists)
-> Weekdays (excluding Public Holidays) @ 8AM it would create the Security Copilot capacity (with 1 Provisioned SCU, and allow upto 10 overage SCU per hour)
-> Everyday @ 6PM it would remove the Security Copilot capacity (if it exists)
+> - Everyday @ 7AM it would remove the Security Copilot capacity (if it exists)
+> - Weekdays (excluding Public Holidays) @ 8AM it would create the Security Copilot capacity (with 1 Provisioned SCU, and allow upto 10 overage SCU per hour)
+> - Everyday @ 6PM it would remove the Security Copilot capacity (if it exists)
 
 <br>
 
