@@ -2,7 +2,7 @@
 
 <img src="https://avatars.githubusercontent.com/u/34251619?v=4" align="center" width="144px" height="144px"/>
 
- ### ![alt text](../../_images/securitycopilot-icon.png =32x32) Security Copilot - Logic App - Security Copilot Scheduler
+ ### ![alt text](../../_images/securitycopilot-icon.png | width=32) Security Copilot - Logic App - Security Copilot Scheduler
 
 </div>
 
@@ -12,7 +12,7 @@
 
 These are a set of Logic Apps you can use to schedule changes to Security Copilot capacities to meet you different usage requirements, and manage your overall Security Copilot spend.
 
-- ![ ](../../_images/azure_logicapp_icon.png) **BASIC LOGIC APP**
+- ![ ](../../_images/azure_logicapp_icon.png ) **BASIC LOGIC APP**
 The Baseline Logic App can be used to set (or delete) the Security Copilot capacity based on a schedule. The defaults provided with this logic app are set to run everyday at 7AM (7:00) and 6PM (18:00) and remove the Security Copilot capacity.
 >[!Note]
 > I set the recurrance (or Schedule) for the Baseline app to run twice a day for my own environment this was to ensure my baseline SCU requirements was being enforced twice daily no matter what day of the week, or if it was a public holiday.
