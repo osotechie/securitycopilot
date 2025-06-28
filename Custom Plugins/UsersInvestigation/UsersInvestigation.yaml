@@ -17,7 +17,7 @@ SkillGroups:
           It is also possible to specify if the results should exclude events with success or failure (in ignoreResultSignature). When it is requested to consider only
           successful signins, exclude result signature "failure"; viceversa, when it is requested to consider only failed signins, exclude result signature "success". 
           Select this skill whenever the prompt requests for a list of signin locations.
-        ExaamplePrompt:
+        ExamplePrompt:
           - "/GetSigninEventLocationsSummary List me the signin locations of yesterday. Ignore the signins from the locations IT and NL"
           - "/GetSigninEventLocationsSummary Get the locations with successful signins during the last hour. Include the results"
           - "/GetSigninEventLocationsSummary Fetch the locations with result type 50074 and 50076 occurred today"
@@ -71,7 +71,7 @@ SkillGroups:
           It is also possible to specify if the results should exclude events with success or failure (in ignoreResultSignature). When it is requested to consider only
           successful signins, exclude result signature "failure"; viceversa, when it is requested to consider only failed signins, exclude result signature "success". 
           Select this skill whenever the prompt requests for a list of signin locations for a set of users.
-        ExaamplePrompt:
+        ExamplePrompt:
           - "/GetSigninEventLocationsSummaryByUsers List me the signin locations of yesterday for the users john@contoso.com and rick@contoso.com"
           - "/GetSigninEventLocationsSummaryByUsers Get the locations with successful signins during the last hour for the users john@contoso.com and rick@contoso.com"
           - "/GetSigninEventLocationsSummaryByUsers Fetch the locations with result type 50074 and 50076 occurred today for the users john@contoso.com and rick@contoso.com"        
@@ -130,7 +130,7 @@ SkillGroups:
           It is also possible to specify if the results should exclude events with success or failure (in ignoreResultSignature). When it is requested to consider only
           successful signins, exclude result signature "failure"; viceversa, when it is requested to consider only failed signins, exclude result signature "success". 
           Select this skill whenever the prompt requests for a list of signin locations and additional details (like client app, target app) for a set of users.
-        ExaamplePrompt:
+        ExamplePrompt:
           - "/GetSigninEventDetailsSummaryByUsers List me the signin locations of yesterday for the users john@contoso.com and rick@contoso.com. Explain the results"
           - "/GetSigninEventDetailsSummaryByUsers Get the locations with successful signins during the last hour for the users john@contoso.com and rick@contoso.com. Include the target apps."
           - "/GetSigninEventDetailsSummaryByUsers Fetch the locations with result type 50074 and 50076 occurred today for the users john@contoso.com and rick@contoso.com. Specify the client apps and the target apps."              
@@ -183,7 +183,7 @@ SkillGroups:
         DisplayName: Get a list of inactive users based on signin information 
         Description: Get a list of inactive users based on signin information 
         DescriptionForModel : Get a list of inactive users based on having no signins for the pastDays period.
-        ExaamplePrompt:
+        ExamplePrompt:
           - "/GetInactiveUsers for the last 10 days"
           - "/GetInactiveUsers based on the last 90 days"              
         Inputs:
