@@ -196,9 +196,9 @@ SkillGroups:
         Settings:
           Target: Defender
           Template: |-
-            let RecentSignIns = SigninLogs  
             let startDateTime = datetime('{{startDateTime}}');
             let endDateTime = datetime('{{endDateTime}}');
+            let RecentSignIns = SigninLogs  
             | where TimeGenerated between (startDateTime .. endDateTime)
             | distinct UserPrincipalName;  
             SigninLogs  
