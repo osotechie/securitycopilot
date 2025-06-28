@@ -194,7 +194,7 @@ SkillGroups:
             Description: The end date and time of the considered time frame. 
             Required: true
         Settings:
-          Target: Defender
+          Target: Sentinel
           Template: |-
             let startDateTime = datetime('{{startDateTime}}');
             let endDateTime = datetime('{{endDateTime}}');
