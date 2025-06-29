@@ -90,14 +90,14 @@
             }
         },
         "Provisioned SCU": {
-            "defaultValue": 0,
+            "defaultValue": 1,
             "type": "Int",
             "metadata": {
                 "description": "New / Updated value your organisation wants to have in Provisioned SCUs."
             }
         },
         "Overage": {
-            "defaultValue": "None",
+            "defaultValue": "Limited",
             "type": "String",
             "allowedValues": [
                 "Unlimited",
@@ -109,7 +109,7 @@
             }
         },
         "Overage Amount": {
-            "defaultValue": 0,
+            "defaultValue": 10,
             "type": "Int",
             "metadata": {
                 "description": "New / Updated value your organisation wants to allow for overage SCU usage. This is ignored if overage state is set to None, or Unlimited."

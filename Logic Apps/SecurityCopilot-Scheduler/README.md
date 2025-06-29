@@ -22,6 +22,13 @@ The Advanced logic App can be used to set (or delete) the Security Copilot capac
 
     ![alt text](../../_images/Workdays-LogicApp-Designer.png)
 
+<br>
+
+>[!Note]
+>You could either manage the logic for weekdays, weekends etc using the recurrence of the logic app, or the logic cases. I choose to include the logic cases to allow for scenarios where you may want to have a single logic app that applies different capacities over weekdays, and weekends for example. 
+
+<br>
+
 - ![ ](../../_images/azure_logicapp_icon.png) **"FOR *X* TIME" LOGIC APP**
 This logic App can be used to provision Security Copilot capacity for a given amount of time, at which point it will then be deleted. This could be used for example for quickly generating some reports via Security Copilot, or testing.
 
@@ -30,16 +37,7 @@ This logic App can be used to provision Security Copilot capacity for a given am
 
 <br>
 
-> [!Tip]
-> If you deployed both Logic Apps using the defaults provided, it would ensure the following:
->
-> - Everyday @ 7AM it would remove the Security Copilot capacity (if it exists)
-> - Weekdays (excluding Public Holidays) @ 8AM it would create the Security Copilot capacity (with 1 Provisioned SCU, and allow upto 10 overage SCU per hour)
-> - Everyday @ 6PM it would remove the Security Copilot capacity (if it exists)
-
-<br>
-
-You can create different scheduling scenarios for your Security Copilot capacity using both the Baseline and Workdays logic apps if you wanted, for example:
+You can create different scheduling scenarios for your Security Copilot capacity using both the Basic and Advanced logic apps if you wanted, for example:
 
 #### Example 1: Baseline with different weekday capacity
 - Deploy the Basic Logic App, with it set to Provision 2 SCU and 3 Overage SCU that runs at 7AM and 6PM as your Baseline capacity configuration
