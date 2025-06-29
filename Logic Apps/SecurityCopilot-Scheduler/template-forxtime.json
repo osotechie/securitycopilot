@@ -2,8 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "metadata":  {
-        "title":  "Security Copilot Capacity Scheduler (Baseline)",
-        "description": "This Logic App is used to set the specified number of Security Compute Units (SCUs) for Security Copilot (including settings related to overage). The Baseline version of the app is used to set the baseline SCU capacity you want running at all times. If the capacity already exists it will either be modified or deleted, depending on the Provisioned SCU units specified (if 0 will be deleted).",
+        "title":  "Security Copilot Capacity Scheduler - For X Time",
+        "description": "This Logic App is used to create a specified number of Security Compute Units (SCUs) for Security Copilot (including settings related to overage) for a given number of hours. At which point it will be deleted.",
         "prerequisites":  "Azure Subscription with enough quote / credit for the required SCU capacity.",
         "postDeployment":  [
             "1. Assign the Managed Identity of the Logic App the Contributor role on the Resource Group where the Capacity has to be created, modified or deleted.",

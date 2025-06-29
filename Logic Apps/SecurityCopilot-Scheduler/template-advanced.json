@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "metadata":  {
-        "title":  "Security Copilot Capacity Scheduler",
+        "title":  "Security Copilot Capacity Scheduler - Advanced",
         "description": "This Logic App is used to set the specified number of Security Compute Units (SCUs) for Security Copilot (including settings related to overage). This version of the app provides logic to set the SCU capacity you want based on whether the execution day is either a weekday, weekend or public holiday. If the capacity already exists it will either be modified or deleted, depending on the Provisioned SCU units specified (if 0 will be deleted).",
         "prerequisites":  "Azure Subscription with enough quote / credit for the required SCU capacity.",
         "postDeployment":  [
